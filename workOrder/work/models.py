@@ -5,7 +5,7 @@ class Pekerjaan(models.Model):
     pekerjaan = models.CharField(max_length=255)
 
     class Meta:
-        ordering = ('name',)    # iterable
+        ordering = ('pekerjaan',)    # iterable
         # verbose_name_plural = 'Categories'
 
     def __str__(self):
