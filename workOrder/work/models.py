@@ -1,12 +1,12 @@
 from django.db import models
-
+from django.db.models.functions import Now
 
 class Pekerjaan(models.Model):
     pekerjaan = models.CharField(max_length=255)
 
     class Meta:
         ordering = ('pekerjaan',)    # iterable
-        # verbose_name_plural = 'Categories'
+        verbose_name_plural = 'pekerjaan'
 
     def __str__(self):
         return self.pekerjaan
@@ -17,6 +17,7 @@ class Pengguna(models.Model):
 
     class Meta:
         ordering = ('pengguna',)
+        verbose_name_plural = 'pengguna'
 
     def __str__(self):
         return self.pengguna
@@ -27,6 +28,7 @@ class Status(models.Model):
 
     class Meta:
         ordering = ('status',)
+        verbose_name_plural = 'status'
 
     def __str__(self):
         return self.status
@@ -37,6 +39,7 @@ class Pelaksana(models.Model):
 
     class Meta:
         ordering = ('pelaksana',)
+        verbose_name_plural = 'pelaksana'
 
     def __str__(self):
         return self.pelaksana
@@ -45,10 +48,10 @@ class Pelaksana(models.Model):
 
 
 class Report(models.Model):
-    nomor = models.IntegerField(default=0)
-    jam = models.DateTimeField(auto_now_add=True)
+    # nomor = models.IntegerField(default=0)
+    jam = models.DateField()
     jenis_pekerjaan = models.ForeignKey(Pekerjaan, on_delete=models.CASCADE)
     pengguna = models.ForeignKey(Pengguna, on_delete=models.CASCADE)
     pelaksana = models.ForeignKey(Pelaksana, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
-    Keterangan = models.CharField(max_length=255)
+    keterangan = models.CharField(max_length=255)
