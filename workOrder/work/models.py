@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.functions import Now
 
+
 class Pekerjaan(models.Model):
     pekerjaan = models.CharField(max_length=255)
 

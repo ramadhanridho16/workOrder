@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %}{% endblock title %} | WorkOrder</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
+        <a href="/" class="text-xl font-semibold">RS PKU CEPU</a>
+
+            {% if request.user.is_authenticated %}
+            <p>Kamu dapat melihat pesan ini</p>
+            
+            {% else %}
+            <a href="{% url 'core:signup' %}"
+                class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign
+                Up</a>
+            <a href="{% url 'core:login' %}"
+                class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-gray-700">Log
+                In</a>
+            {% endif %}
+
+    </nav>
+    <div class="px-6 py-6">
+        {% block content%}
+
+        {% endblock content%}
+    </div>
+
+    <footer class="py-6 px-6 flex justify-between bg-gray-800">
+        <div class="w-2/3 pr-10">
+            <h3 class="mb-5 font-semibold text-gray-400 ">About</h3>
+            <p class="text-lg text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab laboriosam
+                perspiciatis, aut impedit repellat at molestias quod dolor illum perferendis, consectetur hic! Mollitia
+                incidunt culpa distinctio, tenetur ab sed nam?</p>
+        </div>
+
+        <div class="w-1/3">
+            <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
+
+            {% comment %} <ul class="space-y-2">
+                <li><a href="#" class="text-teal-500 text-lg hover:text-teal-700">About</a></li>
+                <li><a href="{% url 'core:contact' %}" class="text-teal-500 text-lg hover:text-teal-700">Contact</a>
+                </li>
+                <li><a href="#" class="text-teal-500 text-lg hover:text-teal-700">Privacy policy</a></li>
+                <li><a href="#" class="text-teal-500 text-lg hover:text-teal-700">Terms of use</a></li>
+            </ul> {% endcomment %}
+        </div>
+
+    </footer>
+</body>
+
+</html>
