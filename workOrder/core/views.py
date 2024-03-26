@@ -1,17 +1,21 @@
 from django.shortcuts import render, redirect
-from work.models import Report
+from .models import Report
 # from item.models import Category, Item
 from .forms import SignupForm
 
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404, redirect
 
-def index(request):
-    reports = Report.objects.all()
-    return render(request, 'core/index.html', {'reports': reports})
+# Create your views here.
+from django.http import HttpResponse
+from .forms import NewItemForm, EditItemForm
+from .models import Report
 
 
-# def contact(request):
-#     return render(request, 'core/contact.html')
-
+# def index(request):
+#     reports = Report.objects.all()
+#     return render(request, 'core/index.html', {'reports': reports})
 
 def signup(request):
     if request.method == 'POST':
@@ -27,6 +31,46 @@ def signup(request):
         'form': form
     })
 
-# def report_table(request):
-#     reports = Report.objects.all()      # Retrieve all rows from reports table
-#     return render(request, "")
+
+
+@login_required
+def work_list(request):
+    reports = Report.objects.all()
+    return render(request, 'core/task_list.html', {'reports': reports})
+
+@login_required
+def work_detail(request, pk):
+    report = get_object_or_404(Report, pk=pk)
+    return render(request, 'core/task_detail.html', {'reports': report})
+
+@login_required
+def work_create(request):
+    if request.method == 'POST':
+        form = NewItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:work_list')
+    else:
+        form = NewItemForm()
+    return render(request, 'core/task_form.html', {'form': form})
+
+@login_required
+def work_update(request, pk):
+    report = get_object_or_404(Report, pk=pk)
+    if request.method == 'POST':
+        form = EditItemForm(request.POST, instance=report)
+        if form.is_valid():
+            form.save()
+            return redirect('core:work_list')
+    else:
+        form = EditItemForm(instance=report)
+    return render(request, 'core/task_form.html', {'form': form})
+
+
+@login_required
+def work_delete(request, pk):
+    report = get_object_or_404(Report, pk=pk)
+    if request.method == 'POST':
+        report.delete()
+        return redirect('core:work_list')
+    return render(request, 'core/task_confirm_delete.html', {'report': report})

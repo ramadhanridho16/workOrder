@@ -1,0 +1,60 @@
+<!-- task_list.html -->
+
+{% extends "core/base.html" %}
+
+{% block title %} List {% endblock title %}
+
+{% block content %}
+
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h1 class="mb-12 text-2xl text-center">Tabel Report Pekerjaan</h1>
+    <div class="flex justify-center">
+        <table class="border-collapse border border-gray-200">
+            <thead>
+                <tr>
+                    {% comment %} <th>ID</th> {% endcomment %}
+                    <th class="border border-gray-200 p-4">Tanggal</th>
+                    <th class="border border-gray-200 p-4">Jenis Pekerjaan</th>
+                    <th class="border border-gray-200 p-4">Pengguna</th>
+                    <th class="border border-gray-200 p-4">Pelaksana</th>
+                    <th class="border border-gray-200 p-4">Status</th>
+                    <th class="border border-gray-200 py-4 px-20">Keterangan</th>
+                    <th> </th>
+                    <th> </th>
+                    <!-- Add more headers for additional columns -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr>
+                    {% comment %} <td>{{ report.id }}</td> {% endcomment %}
+                    <td class="border border-gray-200 p-4">{{ report.jam }}</td>
+                    <td class="border border-gray-200 p-4">{{ report.jenis_pekerjaan }}</td>
+                    <td class="border border-gray-200 p-4">{{ report.pengguna}}</td>
+                    <td class="border border-gray-200 p-4">{{ report.pelaksana }}</td>
+                    <td class="border border-gray-200 p-4">{{ report.status }}</td>
+                    <td class="border border-gray-200 py-4 px-20">{{ report.keterangan }}</td>
+                    <td class="border border-gray-200 p-4"><a href="{% url 'core:work_update' report.pk %}" class="px-3 py-1 text-lg font-semibold bg-teal-500 text-white rounded-md hover:bg-teal-700">Edit</a></td>
+                    <td class="border border-gray-200 p-4"><form action="{% url 'core:work_delete' report.pk %}" class="px-3 py-1 text-lg font-semibold bg-red-500 text-white rounded-md hover:bg-red-700">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form></td>
+                    
+                    <!-- Render additional columns here -->
+                </tr>                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+    {% comment %} <h1>Task List</h1>
+    <ul>
+        {% for report in reports %}
+            <li><a href="{% url 'work_detail' report.pk %}">{{ report.jam }}</a></li>
+        {% endfor %}
+    </ul> {% endcomment %}
+    {% comment %} <a href="{% url 'work_create' %}">Create New Task</a> {% endcomment %}
+
+
+{% endblock content %}

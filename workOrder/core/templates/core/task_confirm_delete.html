@@ -1,0 +1,16 @@
+<!-- task_confirm_delete.html -->
+{% extends "core/base.html" %}
+
+{% block title %} Delete {% endblock title %}
+
+{% block content %}
+
+    <h1>Confirm Deletion</h1>
+    <p>Are you sure you want to delete "{{ report.pelaksana }}"?</p>
+    <form action="{% url 'core:work_delete' report.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm Delete</button>
+    </form>
+    <a href="{% url 'core:work_detail' report.pk %}">Cancel</a>
+
+{% endblock content %}

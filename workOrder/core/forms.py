@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-
+from .models import Report
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
@@ -38,3 +38,54 @@ class SignupForm(UserCreationForm):
         'placeholder': 'Repeat password',
         'class': 'w-full py-4 px-6 rounded-xl',
     }))
+
+
+INPUT_CLASS = 'w-full py-4 px-6 rounded-xl border'
+
+class NewItemForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ('jam', 'jenis_pekerjaan', 'pengguna', 'pelaksana', 'status', 'keterangan')
+        widgets = {
+            'jam': forms.DateInput(attrs={
+                'type': 'date',
+                'class': INPUT_CLASS
+            }),
+            'pekerjaan': forms.Select(attrs={
+                'class': INPUT_CLASS
+            }),
+            'pengguna': forms.Select(attrs={
+                'class': INPUT_CLASS
+            }),
+            'pelaksana': forms.Select(attrs={
+                'class': INPUT_CLASS
+            }),
+            'status': forms.Select(attrs={
+                'class': INPUT_CLASS
+            }),
+            'keterangan': forms.Textarea(attrs={
+                'class': INPUT_CLASS
+            }),
+        }
+
+class EditItemForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ('jenis_pekerjaan', 'pengguna', 'pelaksana', 'status', 'keterangan')
+        widgets = {
+            'pekerjaan': forms.Select(attrs={
+                'class': INPUT_CLASS
+            }),
+            'pengguna': forms.Select(attrs={
+                'class': INPUT_CLASS
+            }),
+            'pelaksana': forms.Select(attrs={
+                'class': INPUT_CLASS
+            }),
+            'status': forms.Select(attrs={
+                'class': INPUT_CLASS
+            }),
+            'keterangan': forms.Textarea(attrs={
+                'class': INPUT_CLASS
+            }),
+        }
