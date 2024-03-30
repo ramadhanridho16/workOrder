@@ -15,4 +15,6 @@ urlpatterns = [
     path('core/new/', views.work_create, name='work_create'),
     path('core/<int:pk>/edit/', views.work_update, name='work_update'),
     path('core/<int:pk>/delete/', views.work_delete, name='work_delete'),
+    path('core/cetak/', views.cetak, name='cetak'),
+    path('core/search/', views.work_search, name='work_search'),
 ]

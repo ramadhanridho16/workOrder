@@ -11,6 +11,6 @@
         {% csrf_token %}
         <button type="submit">Confirm Delete</button>
     </form>
-    <a href="{% url 'core:work_detail' report.pk %}">Cancel</a>
+    <a href="{% url 'core:work_list'%}">Cancel</a>
 
 {% endblock content %}

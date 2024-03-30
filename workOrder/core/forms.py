@@ -89,3 +89,6 @@ class EditItemForm(forms.ModelForm):
                 'class': INPUT_CLASS
             }),
         }
+
+class DateSearchForm(forms.Form):
+    jam = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))

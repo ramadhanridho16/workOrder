@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from .models import Report
+from datetime import datetime, timedelta
 # from item.models import Category, Item
 from .forms import SignupForm
 
@@ -9,13 +12,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.http import HttpResponse
-from .forms import NewItemForm, EditItemForm
+from .forms import NewItemForm, EditItemForm, DateSearchForm
 from .models import Report
 
-
-# def index(request):
-#     reports = Report.objects.all()
-#     return render(request, 'core/index.html', {'reports': reports})
 
 def signup(request):
     if request.method == 'POST':
@@ -36,7 +35,27 @@ def signup(request):
 @login_required
 def work_list(request):
     reports = Report.objects.all()
-    return render(request, 'core/task_list.html', {'reports': reports})
+
+    return render(request, 'core/task_list.html', {
+        'reports': reports,
+        })
+
+@login_required
+def work_search(request):
+    global start_date, end_date
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date and end_date:
+        data = Report.objects.filter(jam__range=[start_date, end_date])
+    else:
+        data = Report.objects.all()
+
+    return render(request, 'core/task_search.html', {
+        'data': data,
+        'start_date':start_date,
+        'end_date':end_date
+        })
 
 @login_required
 def work_detail(request, pk):
@@ -73,4 +92,24 @@ def work_delete(request, pk):
     if request.method == 'POST':
         report.delete()
         return redirect('core:work_list')
-    return render(request, 'core/task_confirm_delete.html', {'report': report})
+    return render(request, 'core/task_confirm_delete.html', {'report':report})
+
+@login_required
+def cetak(request):
+    global start_date, end_date
+    # start_date = request.GET.get('start_date')
+    # end_date = request.GET.get('end_date')
+
+    data = None
+
+    # Lakukan operasi cetak dengan menggunakan start_date dan end_date
+    if data == None:
+        data = Report.objects.all()
+    if start_date and end_date:
+        data = Report.objects.filter(jam__range=[start_date, end_date])
+
+    return render(request, 'core/cetak.html', {
+        'data': data,
+        'start_date': start_date,
+        'end_date': end_date
+    })

@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <nav class="py-6 px-6 flex justify-between items-center bg-gray-900 text-white">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                {% comment %} <link rel="icon" href=" {% static "images/RSPKUCEPU.png" %}"> {% endcomment %}
+                <img src="{% static "core/RSPKUCEPU.png" %}" alt="Logo Perusahaan" class="h-12">
+            </div>
+            <!-- Informasi Perusahaan -->
+            <div class="px-auto ml-2 flex-shrink-0">
+                <div class="text-4xl font-bold">RS PKU MUHAMMADIYAH CEPU</div>
+                <div class="text-base">Jl.Ronggolawe No.137, Telp.(0296) 421727, Fax. (0296)424678 CEPU-58311</div>
+                <div class="text-base">Email : rspku_cepu@yahoo.co.id, Ijin Operasional : 449/221/2016, KARS-SERT/50/II/2016</div>
+            </div class="flex-shrink-0">
+                <img src="{% static "core/LARSI.png" %}" alt="Logo Perusahaan" class="h-12">
+            </div>
+        
+    </nav>    
+
+    <table class="border-collapse border border-gray-200">
+        <thead>
+            <tr>
+                <th class="border border-gray-200 p-2">Tanggal</th>
+                <th class="border border-gray-200 p-2">Jenis Pekerjaan</th>
+                <th class="border border-gray-200 p-2">Pengguna</th>
+                <th class="border border-gray-200 p-2">Pelaksana</th>
+                <th class="border border-gray-200 p-2">Status</th>
+                <th class="border border-gray-200 p-2">Keterangan</th>
+                
+                <!-- Add more headers for additional columns -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in data %}
+            <tr>
+                <td class="border border-gray-200 p-2">{{ report.jam }}</td>
+                <td class="border border-gray-200 p-2">{{ report.jenis_pekerjaan }}</td>
+                <td class="border border-gray-200 p-2">{{ report.pengguna}}</td>
+                <td class="border border-gray-200 p-2">{{ report.pelaksana }}</td>
+                <td class="border border-gray-200 p-2">{{ report.status }}</td>
+                <td class="border border-gray-200 p-2">{{ report.keterangan }}</td>
+            </tr>                    
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>
+
