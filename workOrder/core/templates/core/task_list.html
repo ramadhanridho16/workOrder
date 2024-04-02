@@ -15,7 +15,22 @@
         <input type="date" id="end_date" class="rounded-xl border mx-2 my-1 p-2" name="end_date">
         <input type="submit" class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" value="Filter">
         
-    </form> 
+    </form>
+    
+    <form method="GET" action="{% url 'core:work_search' %}">
+        <select name="status">
+            <option value="">Semua Status</option>
+            <option value="Selesai">Selesai</option>
+            <option value="Pending">Pending</option>
+            <option value="Tahap Rencana">Tahap Rencana</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    
+    {% for model in daftar_model %}
+        <!-- Tampilkan informasi model di sini -->
+    {% endfor %}
+    
     
     {% comment %} <button class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" method="GET"><a href="{% url "core:cetak" %}">Cetak</a></button> {% endcomment %}
    

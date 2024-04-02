@@ -49,9 +49,6 @@ class NewItemForm(forms.ModelForm):
         widgets = {
             'jam': forms.TimeInput(attrs={ 
                 'type': 'time',
-                'id': 'time',
-                'name': 'time',
-                'step': "1800",
                 'class': INPUT_CLASS 
             }),
             'tanggal': forms.DateInput(attrs={

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Report
+from .models import Report, Status
 from datetime import datetime, timedelta
 # from item.models import Category, Item
 from .forms import SignupForm
@@ -42,21 +42,29 @@ def work_list(request):
 
 @login_required
 def work_search(request):
-    global start_date, end_date
+    global start_date, end_date, status_filter
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
+    status_filter = request.GET.get('status', '')
 
     if start_date and end_date:
         data = Report.objects.filter(jam__range=[start_date, end_date])
     else:
         data = Report.objects.all()
+    
+
+    status = Report.objects.filter(jam__range=[start_date, end_date])
+    if status:
+        status = status.filter(Q(name__icontains=status))
 
     # penambahan pencarian untuk status pending, selesai, dan tahap rencana
+    
 
     return render(request, 'core/task_search.html', {
         'data': data,
         'start_date':start_date,
-        'end_date':end_date
+        'end_date':end_date,
+        'status':status
         })
 
 @login_required
