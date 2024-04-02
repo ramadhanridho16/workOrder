@@ -6,21 +6,17 @@
 
 {% block content %}
 
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h1 class="mb-12 text-2xl text-center">Tabel Report Pekerjaan</h1>
+<div class="mt-2 px-6 py-8 bg-gray-100 rounded-xl">
+    <h1 class="mb-12 text-2xl text-center font-bold">Tabel Report Pekerjaan</h1>
     <form action="{% url 'core:work_search' %}" method="GET">
         <label for="start_date">Start Date:</label>
-        <input type="date" id="start_date" name="start_date">
+        <input type="date" id="start_date" class="rounded-xl border mx-2 my-1 p-2" name="start_date">
         <label for="end_date">End Date:</label>
-        <input type="date" id="end_date" name="end_date">
+        <input type="date" id="end_date" class="rounded-xl border mx-2 my-1 p-2" name="end_date">
         <input type="submit" class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" value="Filter">       
     </form>
    
-    <button class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" method="GET"><a href="{% url "core:cetak" %}">cetak</a></button>
-    
-    {% comment %} <form method="GET" action="{% url 'core:cetak' start_date=start_date end_date=end_date%}">
-        <input type="submit" value="Cetak">
-    </form> {% endcomment %}
+    <button class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" method="GET"><a href="{% url "core:cetak" %}">Cetak</a></button>
 
     <div class="flex justify-center">
         <table class="border-collapse border border-gray-200">
@@ -32,7 +28,7 @@
                     <th class="border border-gray-200 p-4">Pengguna</th>
                     <th class="border border-gray-200 p-4">Pelaksana</th>
                     <th class="border border-gray-200 p-4">Status</th>
-                    <th class="border border-gray-200 p-4">Keterangan</th>
+                    <th class="border border-gray-200 p-4 w-auto">Keterangan</th>
                     <th> </th>
                     <th> </th>
                     <!-- Add more headers for additional columns -->
@@ -47,11 +43,11 @@
                     <td class="border border-gray-200 p-4">{{ report.pengguna}}</td>
                     <td class="border border-gray-200 p-4">{{ report.pelaksana }}</td>
                     <td class="border border-gray-200 p-4">{{ report.status }}</td>
-                    <td class="border border-gray-200 p-4">{{ report.keterangan }}</td>
-                    <td class="border border-gray-200 p-4"><a href="{% url 'core:work_update' report.pk %}" class="px-3 py-1 text-lg font-semibold bg-teal-500 text-white rounded-md hover:bg-teal-700">Edit</a></td>
-                    <td class="border border-gray-200 p-4"><form action="{% url 'core:work_delete' report.pk %}" class="px-3 py-1 text-lg font-semibold bg-red-500 text-white rounded-md hover:bg-red-700">
+                    <td class="border border-gray-200 p-4 w-auto text-justify">{{ report.keterangan }}</td>
+                    <td class="border border-gray-200 px-1"><a href="{% url 'core:work_update' report.pk %}" class="px-4 py-1 text-base font-semibold bg-teal-500 text-white rounded-md hover:bg-teal-700">Edit</a></td>
+                    <td class="border border-gray-200 px-1"><form action="{% url 'core:work_delete' report.pk %}" class="px-3 py-1 text-base font-semibold bg-red-500 text-white rounded-md hover:bg-red-700">
                         {% csrf_token %}
-                        <button type="submit">Delete</button>
+                        <button type="submit">Hapus</button>
                     </form></td>
                     
                     <!-- Render additional columns here -->

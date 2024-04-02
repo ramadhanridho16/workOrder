@@ -51,6 +51,8 @@ def work_search(request):
     else:
         data = Report.objects.all()
 
+    # penambahan pencarian untuk status pending, selesai, dan tahap rencana
+
     return render(request, 'core/task_search.html', {
         'data': data,
         'start_date':start_date,
@@ -96,12 +98,8 @@ def work_delete(request, pk):
 
 @login_required
 def cetak(request):
-    global start_date, end_date
-    # start_date = request.GET.get('start_date')
-    # end_date = request.GET.get('end_date')
-
     data = None
-
+    global start_date, end_date
     # Lakukan operasi cetak dengan menggunakan start_date dan end_date
     if data == None:
         data = Report.objects.all()
@@ -113,3 +111,4 @@ def cetak(request):
         'start_date': start_date,
         'end_date': end_date
     })
+

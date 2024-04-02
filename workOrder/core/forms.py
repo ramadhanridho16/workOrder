@@ -40,21 +40,28 @@ class SignupForm(UserCreationForm):
     }))
 
 
-INPUT_CLASS = 'w-full py-4 px-6 rounded-xl border'
+INPUT_CLASS = 'w-full mx-10 py-4 px-6 rounded-xl border'
 
 class NewItemForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ('jam', 'jenis_pekerjaan', 'pengguna', 'pelaksana', 'status', 'keterangan')
+        fields = ('jam', 'tanggal', 'jenis_pekerjaan', 'user', 'pelaksana', 'status', 'keterangan')
         widgets = {
-            'jam': forms.DateInput(attrs={
+            'jam': forms.TimeInput(attrs={ 
+                'type': 'time',
+                'id': 'time',
+                'name': 'time',
+                'step': "1800",
+                'class': INPUT_CLASS 
+            }),
+            'tanggal': forms.DateInput(attrs={
                 'type': 'date',
                 'class': INPUT_CLASS
             }),
-            'pekerjaan': forms.Select(attrs={
+            'jenis_pekerjaan': forms.Select(attrs={
                 'class': INPUT_CLASS
             }),
-            'pengguna': forms.Select(attrs={
+            'user': forms.Select(attrs={
                 'class': INPUT_CLASS
             }),
             'pelaksana': forms.Select(attrs={
@@ -71,12 +78,12 @@ class NewItemForm(forms.ModelForm):
 class EditItemForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ('jenis_pekerjaan', 'pengguna', 'pelaksana', 'status', 'keterangan')
+        fields = ('jenis_pekerjaan', 'user', 'pelaksana', 'status', 'keterangan')
         widgets = {
-            'pekerjaan': forms.Select(attrs={
+            'jenis_pekerjaan': forms.Select(attrs={
                 'class': INPUT_CLASS
             }),
-            'pengguna': forms.Select(attrs={
+            'user': forms.Select(attrs={
                 'class': INPUT_CLASS
             }),
             'pelaksana': forms.Select(attrs={

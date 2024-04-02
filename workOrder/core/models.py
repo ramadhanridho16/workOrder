@@ -50,12 +50,13 @@ class Pelaksana(models.Model):
 
 class Report(models.Model):
     # nomor = models.IntegerField(default=0)
-    jam = models.DateField()
+    jam = models.TimeField()
+    tanggal = models.DateField()
     jenis_pekerjaan = models.ForeignKey(Pekerjaan, on_delete=models.CASCADE)
-    pengguna = models.ForeignKey(Pengguna, on_delete=models.CASCADE)
+    user = models.ForeignKey(Pengguna, on_delete=models.CASCADE)
     pelaksana = models.ForeignKey(Pelaksana, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
-    keterangan = models.CharField(max_length=255)
+    keterangan = models.TextField()
 
-    # def __str__(self):
-    #     return self.jam
+    class Meta:
+        ordering = ["tanggal", "jam"]

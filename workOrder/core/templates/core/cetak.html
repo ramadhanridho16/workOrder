@@ -7,9 +7,10 @@
     <title>Document</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 </head>
 <body>
-    <nav class="py-6 px-6 flex justify-between items-center bg-gray-900 text-white">
+    <nav class="py-6 px-6 flex justify-between items-center bg-gray-300 text-white">
             <!-- Logo -->
             <div class="flex-shrink-0">
                 {% comment %} <link rel="icon" href=" {% static "images/RSPKUCEPU.png" %}"> {% endcomment %}
@@ -17,24 +18,24 @@
             </div>
             <!-- Informasi Perusahaan -->
             <div class="px-auto ml-2 flex-shrink-0">
-                <div class="text-4xl font-bold">RS PKU MUHAMMADIYAH CEPU</div>
-                <div class="text-base">Jl.Ronggolawe No.137, Telp.(0296) 421727, Fax. (0296)424678 CEPU-58311</div>
-                <div class="text-base">Email : rspku_cepu@yahoo.co.id, Ijin Operasional : 449/221/2016, KARS-SERT/50/II/2016</div>
+                <div class="text-4xl font-bold text-black">RS PKU MUHAMMADIYAH CEPU</div>
+                <div class="text-base text-black">Jl.Ronggolawe No.137, Telp.(0296) 421727, Fax. (0296)424678 CEPU-58311</div>
+                <div class="text-base text-black">Email : rspku_cepu@yahoo.co.id, Ijin Operasional : 449/221/2016, LARSI-SERT/50/II/2016</div>
             </div class="flex-shrink-0">
                 <img src="{% static "core/LARSI.png" %}" alt="Logo Perusahaan" class="h-12">
             </div>
         
     </nav>    
 
-    <table class="border-collapse border border-gray-200">
+    <table class="border-collapse border border-gray-900 flex-shrink-0">
         <thead>
             <tr>
-                <th class="border border-gray-200 p-2">Tanggal</th>
-                <th class="border border-gray-200 p-2">Jenis Pekerjaan</th>
-                <th class="border border-gray-200 p-2">Pengguna</th>
-                <th class="border border-gray-200 p-2">Pelaksana</th>
-                <th class="border border-gray-200 p-2">Status</th>
-                <th class="border border-gray-200 p-2">Keterangan</th>
+                <th class="border border-gray-900 p-2">Tanggal</th>
+                <th class="border border-gray-900 p-2">Jenis Pekerjaan</th>
+                <th class="border border-gray-900 p-2">User</th>
+                <th class="border border-gray-900 p-2">Pelaksana</th>
+                <th class="border border-gray-900 p-2">Status</th>
+                <th class="border border-gray-900 p-2">Keterangan</th>
                 
                 <!-- Add more headers for additional columns -->
             </tr>
@@ -42,12 +43,12 @@
         <tbody>
             {% for report in data %}
             <tr>
-                <td class="border border-gray-200 p-2">{{ report.jam }}</td>
-                <td class="border border-gray-200 p-2">{{ report.jenis_pekerjaan }}</td>
-                <td class="border border-gray-200 p-2">{{ report.pengguna}}</td>
-                <td class="border border-gray-200 p-2">{{ report.pelaksana }}</td>
-                <td class="border border-gray-200 p-2">{{ report.status }}</td>
-                <td class="border border-gray-200 p-2">{{ report.keterangan }}</td>
+                <td class="border border-gray-900 p-1">{{ report.jam }}</td>
+                <td class="border border-gray-900 p-1">{{ report.jenis_pekerjaan }}</td>
+                <td class="border border-gray-900 p-1">{{ report.user }}</td>
+                <td class="border border-gray-900 p-1">{{ report.pelaksana }}</td>
+                <td class="border border-gray-900 p-1">{{ report.status }}</td>
+                <td class="border border-gray-900 p-1">{{ report.keterangan }}</td>
             </tr>                    
             {% endfor %}
         </tbody>
