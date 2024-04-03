@@ -13,8 +13,18 @@
         <input type="date" id="start_date" class="rounded-xl border mx-2 my-1 p-2" name="start_date">
         <label for="end_date">End Date:</label>
         <input type="date" id="end_date" class="rounded-xl border mx-2 my-1 p-2" name="end_date">
-        <input type="submit" class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" value="Filter">       
+        <label>Status Kategori:</label>
+        <select name="status" class="rounded-xl border mx-2 my-1 p-2">
+            <option value="">Semua Status</option>
+            <option value="Selesai">Selesai</option>
+            <option value="Pending">Pending</option>
+            <option value="Tahap Rencana">Tahap Rencana</option>
+        </select>
+        <input type="submit" class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" value="Filter">        
     </form>
+
+    {% comment %} Adding an excel button {% endcomment %}
+    <button class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" method="GET"><a href="{% url "core:download_excel" %}">Download Excel</a></button>
    
     <button class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" method="GET"><a href="{% url "core:cetak" %}">Cetak</a></button>
 
@@ -23,9 +33,10 @@
             <thead>
                 <tr>
                     {% comment %} <th>ID</th> {% endcomment %}
+                    <th class="border border-gray-200 p-4">Jam</th>
                     <th class="border border-gray-200 p-4">Tanggal</th>
                     <th class="border border-gray-200 p-4">Jenis Pekerjaan</th>
-                    <th class="border border-gray-200 p-4">Pengguna</th>
+                    <th class="border border-gray-200 p-4">User</th>
                     <th class="border border-gray-200 p-4">Pelaksana</th>
                     <th class="border border-gray-200 p-4">Status</th>
                     <th class="border border-gray-200 p-4 w-auto">Keterangan</th>
@@ -39,8 +50,9 @@
                 <tr>
                     {% comment %} <td>{{ report.id }}</td> {% endcomment %}
                     <td class="border border-gray-200 p-4">{{ report.jam }}</td>
+                    <td class="border border-gray-200 p-4">{{ report.tanggal }}</td>
                     <td class="border border-gray-200 p-4">{{ report.jenis_pekerjaan }}</td>
-                    <td class="border border-gray-200 p-4">{{ report.pengguna}}</td>
+                    <td class="border border-gray-200 p-4">{{ report.user}}</td>
                     <td class="border border-gray-200 p-4">{{ report.pelaksana }}</td>
                     <td class="border border-gray-200 p-4">{{ report.status }}</td>
                     <td class="border border-gray-200 p-4 w-auto text-justify">{{ report.keterangan }}</td>

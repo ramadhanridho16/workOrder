@@ -17,4 +17,5 @@ urlpatterns = [
     path('core/<int:pk>/delete/', views.work_delete, name='work_delete'),
     path('core/cetak/', views.cetak, name='cetak'),
     path('core/search/', views.work_search, name='work_search'),
+    path('core/download/excel', views.download_excel, name='download_excel'),
 ]

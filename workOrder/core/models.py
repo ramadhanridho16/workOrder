@@ -59,4 +59,4 @@ class Report(models.Model):
     keterangan = models.TextField()
 
     class Meta:
-        ordering = ["tanggal", "jam"]
+        ordering = ["-tanggal", "jam"]

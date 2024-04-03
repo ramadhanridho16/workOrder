@@ -42,20 +42,24 @@ def work_list(request):
 
 @login_required
 def work_search(request):
-    global start_date, end_date, status_filter
+    global start_date, end_date, status_id
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
-    status_filter = request.GET.get('status', '')
+    # statuses = Status.objects.all()
+    status_id = request.GET.get('status', None)
+    data = Report.objects.all()
 
     if start_date and end_date:
-        data = Report.objects.filter(jam__range=[start_date, end_date])
-    else:
-        data = Report.objects.all()
+        data = Report.objects.filter(tanggal__range=[start_date, end_date])
+    # else:
+    #     data = Report.objects.all()
     
+    if status_id:
+        data = data.filter(status__status__iexact=status_id)
 
-    status = Report.objects.filter(jam__range=[start_date, end_date])
-    if status:
-        status = status.filter(Q(name__icontains=status))
+    # status = Report.objects.filter(jam__range=[start_date, end_date])
+    # if status:
+    #     status = status.filter(Q(name__icontains=status))
 
     # penambahan pencarian untuk status pending, selesai, dan tahap rencana
     
@@ -64,7 +68,7 @@ def work_search(request):
         'data': data,
         'start_date':start_date,
         'end_date':end_date,
-        'status':status
+        'status_id':status_id,
         })
 
 @login_required
@@ -106,17 +110,64 @@ def work_delete(request, pk):
 
 @login_required
 def cetak(request):
-    data = None
-    global start_date, end_date
+    data = Report.objects.all()
+    global start_date, end_date, status_id
     # Lakukan operasi cetak dengan menggunakan start_date dan end_date
-    if data == None:
-        data = Report.objects.all()
-    if start_date and end_date:
-        data = Report.objects.filter(jam__range=[start_date, end_date])
+    # if data == None:
+    #     data = Report.objects.all()
+    if start_date and end_date or status_id:
+        data = Report.objects.filter(tanggal__range=[start_date, end_date])
+    if status_id:
+        data = data.filter(status__status__iexact=status_id)
 
     return render(request, 'core/cetak.html', {
         'data': data,
         'start_date': start_date,
-        'end_date': end_date
+        'end_date': end_date,
+        'status_id':status_id
     })
+
+import csv
+import xlwt
+
+def download_excel(request):
+    # Retrieve filtering parameters
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
+    status_id = request.GET.get('status_id', None)
+
+    # Apply filtering
+    data = Report.objects.all()
+    if start_date and end_date:
+        data = data.filter(tanggal__range=[start_date, end_date])
+    if status_id:
+        data = data.filter(status__status__iexact=status_id)
+
+    # Sort the data
+    # data = data.order_by('tanggal')  # You can adjust the sorting criteria as per your requirement
+
+    # Create Excel file
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="data.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Data')
+
+    # Write headers
+    headers = ['Jam', 'Tanggal', 'Jenis Pekerjaan', 'User', 'Pelaksana', 'Status', 'Keterangan']
+    for col, header in enumerate(headers):
+        ws.write(0, col, header)
+
+    # Write data rows
+    for row_num, report in enumerate(data):
+        ws.write(row_num + 1, 0, report.jam.strftime('%H:%M:%S') if report.jam else '')
+        ws.write(row_num + 1, 1, report.tanggal.strftime('%Y-%m-%d') if report.tanggal else '')
+        ws.write(row_num + 1, 2, report.jenis_pekerjaan.pekerjaan)
+        ws.write(row_num + 1, 3, report.user.pengguna)
+        ws.write(row_num + 1, 4, report.pelaksana.pelaksana)
+        ws.write(row_num + 1, 5, report.status.status)
+        ws.write(row_num + 1, 6, report.keterangan)
+
+    wb.save(response)
+    return response
+
 

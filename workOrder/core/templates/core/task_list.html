@@ -13,19 +13,16 @@
         <input type="date" id="start_date" class="rounded-xl border mx-2 my-1 p-2" name="start_date">
         <label for="end_date">End Date:</label>
         <input type="date" id="end_date" class="rounded-xl border mx-2 my-1 p-2" name="end_date">
-        <input type="submit" class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" value="Filter">
-        
-    </form>
-    
-    <form method="GET" action="{% url 'core:work_search' %}">
-        <select name="status">
+        <label>Status Kategori:</label>
+        <select name="status" class="rounded-xl border mx-2 my-1 p-2">
             <option value="">Semua Status</option>
             <option value="Selesai">Selesai</option>
             <option value="Pending">Pending</option>
             <option value="Tahap Rencana">Tahap Rencana</option>
         </select>
-        <button type="submit">Filter</button>
+        <input type="submit" class="px-3 py-1 text-lg font-semibold bg-blue-500 text-white rounded-md hover:bg-blue-700" value="Filter">        
     </form>
+
     
     {% for model in daftar_model %}
         <!-- Tampilkan informasi model di sini -->
@@ -42,7 +39,7 @@
                     <th class="border border-gray-200 p-4">Jam</th>
                     <th class="border border-gray-200 p-4">Tanggal</th>
                     <th class="border border-gray-200 p-4">Jenis Pekerjaan</th>
-                    <th class="border border-gray-200 p-4">Pengguna</th>
+                    <th class="border border-gray-200 p-4">User</th>
                     <th class="border border-gray-200 p-4">Pelaksana</th>
                     <th class="border border-gray-200 p-4">Status</th>
                     <th class="border border-gray-200 p-4 w-auto">Keterangan</th>
@@ -58,9 +55,9 @@
                     <td class="border border-gray-200 p-4">{{ report.jam }}</td>
                     <td class="border border-gray-200 p-4">{{ report.tanggal }}</td>
                     <td class="border border-gray-200 p-4">{{ report.jenis_pekerjaan }}</td>
-                    <td class="border border-gray-200 p-4">{{ report.pengguna}}</td>
+                    <td class="border border-gray-200 p-4">{{ report.user}}</td>
                     <td class="border border-gray-200 p-4">{{ report.pelaksana }}</td>
-                    <td class="border border-gray-200 p-4">{{ report.status }}</td>
+                    <td class="border border-gray-200 p-4 {% if report.status == 'Selesai' %}bg-green-500 text-white{% elif report.status == 'Pending' %}bg-red-500 text-white{% elif report.status == 'Tahap Rencana' %}bg-blue-500 text-white{% endif %}">{{ report.status }}</td>
                     <td class="border border-gray-200 p-4 w-auto text-justify">{{ report.keterangan }}</td>
                     <td class="border border-gray-200 px-1"><a href="{% url 'core:work_update' report.pk %}" class="px-4 py-1 text-base font-semibold bg-teal-500 text-white rounded-md hover:bg-teal-700">Edit</a></td>
                     <td class="border border-gray-200 px-1"><form action="{% url 'core:work_delete' report.pk %}" class="px-3 py-1 text-base font-semibold bg-red-500 text-white rounded-md hover:bg-red-700">
