@@ -112,6 +112,9 @@ def work_delete(request, pk):
 def cetak(request):
     data = Report.objects.all()
     global start_date, end_date, status_id
+    start_date = request.GET.get('start_date', None)
+    end_date = request.GET.get('end_date', None)
+    status_id = request.GET.get('status_id', None)
     # Lakukan operasi cetak dengan menggunakan start_date dan end_date
     # if data == None:
     #     data = Report.objects.all()

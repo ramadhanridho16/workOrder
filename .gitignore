@@ -1,1 +1,3 @@
 venv
+start_django_server.bat
+run_django_server.vbs
