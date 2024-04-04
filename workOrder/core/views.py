@@ -112,13 +112,14 @@ def work_delete(request, pk):
 def cetak(request):
     data = Report.objects.all()
     global start_date, end_date, status_id
-    start_date = request.GET.get('start_date', None)
-    end_date = request.GET.get('end_date', None)
-    status_id = request.GET.get('status_id', None)
+    # penambahan start_date (untuk )
+    # start_date = request.GET.get('start_date', None)
+    # end_date = request.GET.get('end_date', None)
+    # status_id = request.GET.get('status_id', None)
     # Lakukan operasi cetak dengan menggunakan start_date dan end_date
-    # if data == None:
-    #     data = Report.objects.all()
-    if start_date and end_date or status_id:
+    if data == None:
+        data = Report.objects.all()
+    if start_date and end_date:
         data = Report.objects.filter(tanggal__range=[start_date, end_date])
     if status_id:
         data = data.filter(status__status__iexact=status_id)
@@ -135,9 +136,10 @@ import xlwt
 
 def download_excel(request):
     # Retrieve filtering parameters
-    start_date = request.GET.get('start_date', None)
-    end_date = request.GET.get('end_date', None)
-    status_id = request.GET.get('status_id', None)
+    global start_date, end_date, status_id
+    # start_date = request.GET.get('start_date', None)
+    # end_date = request.GET.get('end_date', None)
+    # status_id = request.GET.get('status_id', None)
 
     # Apply filtering
     data = Report.objects.all()
@@ -156,14 +158,15 @@ def download_excel(request):
     ws = wb.add_sheet('Data')
 
     # Write headers
-    headers = ['Jam', 'Tanggal', 'Jenis Pekerjaan', 'User', 'Pelaksana', 'Status', 'Keterangan']
+    headers = ['Jam', 'Tanggal', 'Jenis Pekerjaan', 'Unit', 'Pelaksana', 'Status', 'Keterangan']
     for col, header in enumerate(headers):
         ws.write(0, col, header)
 
+    # ws.write(row_num + 1, 1, report.tanggal.strftime('%Y-%m-%d') if report.tanggal else '')
     # Write data rows
     for row_num, report in enumerate(data):
-        ws.write(row_num + 1, 0, report.jam.strftime('%H:%M:%S') if report.jam else '')
-        ws.write(row_num + 1, 1, report.tanggal.strftime('%Y-%m-%d') if report.tanggal else '')
+        ws.write(row_num + 1, 0, report.jam)
+        ws.write(row_num + 1, 1, report.tanggal)
         ws.write(row_num + 1, 2, report.jenis_pekerjaan.pekerjaan)
         ws.write(row_num + 1, 3, report.user.pengguna)
         ws.write(row_num + 1, 4, report.pelaksana.pelaksana)
